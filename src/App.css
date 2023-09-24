@@ -1,38 +1,41 @@
-.App {
-  text-align: center;
+.input_container {
+  max-width: 600px;
+  margin: 30px auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.tasks_list {
+  display: grid;
+  max-width: 950px !important;
+  padding-top: 20px;
+  margin: 0 auto;
+  gap: 30px;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card {
+  transition: 0.3s;
+}
+.card-warning {
+  border: 1px solid rgb(151, 22, 22) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dellete_row {
+  margin-top: 30px !important;
 }
 
-.App-link {
-  color: #61dafb;
+.dellete_btn {
+  max-width: 250px !important;
+  margin: 30px auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chekbox-btn{
+  display: block;
+  margin: 15px;
+  width: fit-content;
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.chekbox-btn:hover{
+  opacity: 0.7;
 }
