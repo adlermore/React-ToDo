@@ -11,9 +11,7 @@ class Task extends PureComponent{
         this.setState({
             checked: !this.state.checked
         })
-
         this.props.onCheck()
-        
     }
 
     render(){
@@ -23,8 +21,9 @@ class Task extends PureComponent{
                 <input type="checkbox" className="chekbox-btn" onClick={this.toggleCheckbox} />
                 <Card.Body>
                     <Card.Title>{data.title}</Card.Title>
-                    <Card.Text> {data.description} </Card.Text>
-                    <Button variant="danger" disabled={this.props.disabled} onClick={this.props.onRemove(data.id)}>Remove</Button>
+                    <Card.Text> Description: {data.description} </Card.Text>
+                    <Card.Text> Date: {data.date ? data.date.slice(0, 10): 'none'} </Card.Text>
+                    <Button variant="danger" disabled={this.props.disabled} onClick={this.props.onRemove(data._id)}>Remove</Button>
                     <Button variant="info"   disabled={this.props.disabled} className="m-3" onClick={this.props.onEdit(data)}>Change</Button>
                 </Card.Body>
             </Card>

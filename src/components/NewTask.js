@@ -1,55 +1,94 @@
 import React, { PureComponent } from "react";
-import {Form, InputGroup, Button } from "react-bootstrap";
-
+import { Form, InputGroup, Button, Modal } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class NewTask extends PureComponent {
 
     state = {
-        inputValue: ''
+        title: '',
+        description: '',
+        date: new Date()
     }
 
-    handleChange = (event) => {
+    handleChange = (type, value) => {
         this.setState({
-            inputValue: event.target.value
+            [type]: value
         })
     }
 
-    handleKeyDown = (event) =>{
-        if(event.key === 'Enter'){
-            this.sendValue()
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSave()
         }
     }
 
-    sendValue=()=>{
-        const {inputValue} = this.state;
-        if(!inputValue){
-            return;
+    
+    handleSave = () => {
+        const {title , description , date}=this.state;
+        if(!title) return;
+
+        const data = {
+            title,
+            description,
+            date: date.toISOString().slice(0, 10)
         }
-        this.props.onAdd(this.state.inputValue);
-        this.setState({
-            inputValue : ""
-        })
+
+        this.props.onAdd(data)
     }
 
     render() {
         return (
-            <InputGroup
-                className="mb-3">
-                <Form.Control
-                    value={this.state.inputValue}
-                    placeholder="Recipient's username"
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    onChange={event => this.handleChange(event)}
-                    onKeyDown={this.handleKeyDown}
-                    disabled={this.props.disabled}
-                />
-                <Button onClick={this.sendValue} disabled={this.props.disabled} variant="outline-secondary" id="button-addon2">
-                    Add Task
-                </Button>
-            </InputGroup>
+            <Modal
+                show={true}
+                onHide={this.props.onCancel}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title className="modal_title">Add New Tasks </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal_description">
+                    Please Enter New Task Name , Description and Date for complited this task.
+                </Modal.Body>
+                <Modal.Body>
+                    <InputGroup
+                        className="mb-3">
+                        <Form.Control
+                            value={this.state.title}
+                            onChange={(event)=> this.handleChange('title', event.target.value)}
+                            onKeyDown={this.handleKeyDown}
+                            placeholder="Input Task"
+                            aria-label="Input Task"
+                            aria-describedby="basic-addon2"
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Form.Control
+                            as="textarea"
+                            placeholder="Input Task Description..."
+                            value={this.state.description}
+                            onChange={(event)=> this.handleChange('description', event.target.value)}
+                            style={{ height: '100px' }}
+                        />
+                    </InputGroup>
+                    <DatePicker
+                        showIcon
+                        selected={this.state.date}
+                        minDate={new Date()}
+                        className="datepicker_block form-control"
+                        onChange={(value) => this.handleChange('date', value)}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="success" onClick={this.handleSave}>Add</Button>
+                    <Button variant="primary" onClick={this.props.onCancel}>Cancel</Button>
+                </Modal.Footer>
+            </Modal>
         );
     }
 }
 
 export default NewTask;
+

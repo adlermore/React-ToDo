@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Form, InputGroup, Button } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function TaskModal({ value, modalToggle, onSave }) {
-    const [editTask, seteditTask] = useState(value.text);
-
+    const [editTask, seteditTask] = useState(value.title);
+    const [editDesc, seteditDesc] = useState(value.description);
+    const [date, setdate] = useState(new Date());
 
     const handleClose = () => {
         modalToggle()
@@ -12,7 +16,7 @@ function TaskModal({ value, modalToggle, onSave }) {
 
     const changeTaskName = () => {
         if (editTask) {
-            onSave(editTask, value.id)
+            onSave(editTask, editDesc, date , value._id  )
         }
     }
 
@@ -20,6 +24,14 @@ function TaskModal({ value, modalToggle, onSave }) {
         seteditTask(e.target.value)
     }
 
+    const editTaskDesc = (e) => {
+        seteditDesc(e.target.value)
+    }
+
+    const editTaskDate = (e) => {
+        setdate(e)
+    }
+    
     return (
         <>
             <Modal
@@ -29,7 +41,7 @@ function TaskModal({ value, modalToggle, onSave }) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Tasks {value.id} </Modal.Title>
+                    <Modal.Title>Edit Tasks {value.title} </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     Please Edit this Task Name
@@ -45,6 +57,25 @@ function TaskModal({ value, modalToggle, onSave }) {
                             onChange={(evt) => editTaskName(evt)}
                         />
                     </InputGroup>
+
+                    <InputGroup>
+                        <Form.Control
+                            as="textarea"
+                            placeholder="Input Task Description..."
+                            value={editDesc}
+                            onChange={(evt) => editTaskDesc(evt)}
+                            style={{ height: '100px' }}
+                        />
+                    </InputGroup>
+                    <DatePicker
+                        showIcon
+                        selected={date}
+                        minDate={new Date()}
+                        className="datepicker_block form-control"
+                        onChange={(evt) => editTaskDate(evt)}
+                    />
+
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}>

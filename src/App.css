@@ -1,6 +1,25 @@
 .input_container {
   max-width: 600px;
   margin: 30px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_description {
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 400px;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.datepicker_block {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 150px !important;
+  cursor: pointer;
 }
 
 .tasks_list {
@@ -15,6 +34,7 @@
 .card {
   transition: 0.3s;
 }
+
 .card-warning {
   border: 1px solid rgb(151, 22, 22) !important;
 }
@@ -28,7 +48,7 @@
   margin: 30px auto;
 }
 
-.chekbox-btn{
+.chekbox-btn {
   display: block;
   margin: 15px;
   width: fit-content;
@@ -36,6 +56,7 @@
   cursor: pointer;
   transition: 0.3s;
 }
-.chekbox-btn:hover{
+
+.chekbox-btn:hover {
   opacity: 0.7;
 }
