@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Placeholder, Card } from "react-bootstrap";
 import NewTask from "./NewTask"
 import Task from "./Task/Task";
 import Confirm from './Confirm'
 import Modal from './Modal';
-
+import emptyImg from '../assets/img/empty_img.png'
 
 class ToDo extends Component {
     state = {
@@ -12,10 +12,17 @@ class ToDo extends Component {
         checkedTasks: new Set(),
         modalShow: false,
         editTask: null,
+        placeholder: true,
         openNewTaskModal: false
     }
 
     componentDidMount() {
+
+        setTimeout(() => {
+            this.setState({
+                placeholder: false
+            })
+        }, 1000);
 
         fetch('http://localhost:3001/task', {
             method: 'GET',
@@ -23,19 +30,19 @@ class ToDo extends Component {
                 "Content-type": 'application/json'
             }
         })
-        .then((response) => response.json())
-        .then((tasks) => {
-            if (tasks.error) {
-                throw tasks.error;
-            }
-            tasks.reverse();
-            this.setState({
-                tasks: tasks
+            .then((response) => response.json())
+            .then((tasks) => {
+                if (tasks.error) {
+                    throw tasks.error;
+                }
+                tasks.reverse();
+                this.setState({
+                    tasks: tasks
+                })
             })
-        })
-        .catch((err) => {
-            console.log('error', err);
-        })
+            .catch((err) => {
+                console.log('error', err);
+            })
     }
 
     addTask = (data) => {
@@ -47,19 +54,19 @@ class ToDo extends Component {
                 "Content-type": 'application/json'
             }
         })
-        .then((response) => response.json())
-        .then((task) => {
-            if (task.error) {
-                throw task.error;
-            }
-            this.setState({
-                tasks: [task, ...this.state.tasks],
-                openNewTaskModal: false
+            .then((response) => response.json())
+            .then((task) => {
+                if (task.error) {
+                    throw task.error;
+                }
+                this.setState({
+                    tasks: [task, ...this.state.tasks],
+                    openNewTaskModal: false
+                })
             })
-        })
-        .catch((err) => {
-            console.log('error', err);
-        })
+            .catch((err) => {
+                console.log('error', err);
+            })
     }
 
     handleCheck = (taskId) => () => {
@@ -78,25 +85,24 @@ class ToDo extends Component {
     removeTask = (taskId) => () => {
         const customTasks = [...this.state.tasks];
         const updatedTask = customTasks.filter((Task) => Task._id !== taskId)
-
         fetch(`http://localhost:3001/task/${taskId}`, {
             method: 'DELETE',
             headers: {
                 "Content-type": 'application/json'
             }
         })
-        .then((response) => response.json())
-        .then((taskId) => {
-            if (taskId.error) {
-                throw taskId.error;
-            }
-            this.setState({
-                tasks: updatedTask
+            .then((response) => response.json())
+            .then((taskId) => {
+                if (taskId.error) {
+                    throw taskId.error;
+                }
+                this.setState({
+                    tasks: updatedTask
+                })
             })
-        })
-        .catch((err) => {
-            console.log('error', err);
-        })
+            .catch((err) => {
+                console.log('error', err);
+            })
 
     }
 
@@ -112,26 +118,26 @@ class ToDo extends Component {
                 "Content-type": 'application/json'
             }
         })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.error) {
-                throw data.error;
-            }
-            let tasks = [...this.state.tasks];
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    throw data.error;
+                }
+                let tasks = [...this.state.tasks];
 
-            checkedTasks.forEach(taskId => {
-                tasks = tasks.filter(task => task._id !== taskId)
-            });
+                checkedTasks.forEach(taskId => {
+                    tasks = tasks.filter(task => task._id !== taskId)
+                });
 
-            checkedTasks.clear();
-            this.setState({
-                tasks,
-                checkedTasks
+                checkedTasks.clear();
+                this.setState({
+                    tasks,
+                    checkedTasks
+                })
             })
-        })
-        .catch((err) => {
-            console.log('error', err);
-        })
+            .catch((err) => {
+                console.log('error', err);
+            })
 
     }
 
@@ -172,20 +178,20 @@ class ToDo extends Component {
                 "Content-type": 'application/json'
             }
         })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.error) {
-                throw data.error;
-            }
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    throw data.error;
+                }
 
-            this.setState({
-                tasks: tasks,
-                editTask: null
+                this.setState({
+                    tasks: tasks,
+                    editTask: null
+                })
             })
-        })
-        .catch((err) => {
-            console.log('error', err);
-        })
+            .catch((err) => {
+                console.log('error', err);
+            })
     }
 
     toggleModal = () => {
@@ -214,7 +220,7 @@ class ToDo extends Component {
         )
 
         return (
-            <Container fluid={true}>
+            <Container fluid={true} className="main_section">
                 <Row>
                     <Col>
                         <div className="input_container">
@@ -229,7 +235,59 @@ class ToDo extends Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="tasks_list">{tasksContainer}</div>
+                {this.state.placeholder ?
+                    <div className="tasks_list">
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    :
+                    <>
+                        {this.state.tasks.length > 0
+                            ?
+                            <div className="tasks_list">
+                                {tasksContainer}
+                            </div>
+                            : <div className="empty_block">
+                                <div className="empty_title">ToDo List is Empty</div>
+                                <img src={emptyImg} alt="emptyImage" />
+                            </div>
+                        }
+                    </>
+                }
                 <Row className="justify-content-center dellete_row">
                     <Button
                         variant="danger"

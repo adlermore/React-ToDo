@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.react-datepicker-popper{
+  z-index: 9 !important;
+}
+
+*{
+  text-decoration: none !important;
+  outline: none !important;
+}
