@@ -5,6 +5,8 @@ import Task from "./Task/Task";
 import Confirm from './Confirm'
 import Modal from './Modal';
 import emptyImg from '../assets/img/empty_img.png'
+import { connect } from "react-redux";
+import { getTasks } from "../store/actions";
 
 class ToDo extends Component {
     state = {
@@ -18,31 +20,33 @@ class ToDo extends Component {
 
     componentDidMount() {
 
-        setTimeout(() => {
-            this.setState({
-                placeholder: false
-            })
-        }, 1000);
+        // setTimeout(() => {
+        //     this.setState({
+        //         placeholder: false
+        //     })
+        // }, 1000);
 
-        fetch('http://localhost:3001/task', {
-            method: 'GET',
-            headers: {
-                "Content-type": 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((tasks) => {
-                if (tasks.error) {
-                    throw tasks.error;
-                }
-                tasks.reverse();
-                this.setState({
-                    tasks: tasks
-                })
-            })
-            .catch((err) => {
-                console.log('error', err);
-            })
+        // fetch('http://localhost:3001/task', {
+        //     method: 'GET',
+        //     headers: {
+        //         "Content-type": 'application/json'
+        //     }
+        // })
+        //     .then((response) => response.json())
+        //     .then((tasks) => {
+        //         if (tasks.error) {
+        //             throw tasks.error;
+        //         }
+        //         tasks.reverse();
+        //         this.setState({
+        //             tasks: tasks
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log('error', err);
+        //     })
+
+        this.props.getTasks();
     }
 
     addTask = (data) => {
@@ -144,6 +148,7 @@ class ToDo extends Component {
     handleEdit = (task) => () => {
         this.setState({ editTask: task })
     }
+    
     modalToggle = () => {
         this.setState({ editTask: null })
     }
@@ -186,7 +191,7 @@ class ToDo extends Component {
 
                 this.setState({
                     tasks: tasks,
-                    editTask: null
+                    editTask: null 
                 })
             })
             .catch((err) => {
@@ -207,7 +212,10 @@ class ToDo extends Component {
     }
 
     render() {
-        const tasksContainer = this.state.tasks.map((task) =>
+
+        const {tasks , placeholder} = this.props;
+
+        const tasksContainer = tasks.map((task) =>
             <div key={task._id} className="task_block">
                 <Task
                     disabled={!!this.state.checkedTasks.size}
@@ -235,7 +243,7 @@ class ToDo extends Component {
                         </div>
                     </Col>
                 </Row>
-                {this.state.placeholder ?
+                {placeholder ?
                     <div className="tasks_list">
                         <Card style={{ width: '18rem' }}>
                             <Card.Body>
@@ -276,7 +284,7 @@ class ToDo extends Component {
                     </div>
                     :
                     <>
-                        {this.state.tasks.length > 0
+                        {tasks.length > 0
                             ?
                             <div className="tasks_list">
                                 {tasksContainer}
@@ -322,4 +330,23 @@ class ToDo extends Component {
     }
 }
 
-export default ToDo;
+// export default ToDo;
+
+const mapStatetoProps = (state) => {
+    return {
+        tasks: state.tasks,
+        placeholder : state.loading
+    }
+}
+
+// const mapDispatchToProps = (dispatch)=>{
+//     return {
+//         changeCount: (value ) => { dispatch({type: 'CHANGE_COUNT' , value: value} )}
+//     }
+// }
+
+const mapDispatchToProps = {
+    getTasks : getTasks,
+}
+
+export default connect(mapStatetoProps , mapDispatchToProps)(ToDo);
