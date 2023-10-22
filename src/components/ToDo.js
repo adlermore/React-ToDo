@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Container, Row, Col, Button, Placeholder, Card } from "react-bootstrap";
 import NewTask from "./NewTask"
 import Task from "./Task/Task";
@@ -6,11 +6,10 @@ import Confirm from './Confirm'
 import Modal from './Modal';
 import emptyImg from '../assets/img/empty_img.png'
 import { connect } from "react-redux";
-import { getTasks } from "../store/actions";
+import { editTasks, getTasks } from "../store/actions";
 
-class ToDo extends Component {
+class ToDo extends PureComponent {
     state = {
-        tasks: [],
         checkedTasks: new Set(),
         modalShow: false,
         editTask: null,
@@ -19,58 +18,13 @@ class ToDo extends Component {
     }
 
     componentDidMount() {
-
-        // setTimeout(() => {
-        //     this.setState({
-        //         placeholder: false
-        //     })
-        // }, 1000);
-
-        // fetch('http://localhost:3001/task', {
-        //     method: 'GET',
-        //     headers: {
-        //         "Content-type": 'application/json'
-        //     }
-        // })
-        //     .then((response) => response.json())
-        //     .then((tasks) => {
-        //         if (tasks.error) {
-        //             throw tasks.error;
-        //         }
-        //         tasks.reverse();
-        //         this.setState({
-        //             tasks: tasks
-        //         })
-        //     })
-        //     .catch((err) => {
-        //         console.log('error', err);
-        //     })
-
         this.props.getTasks();
     }
 
-    addTask = (data) => {
-
-        fetch('http://localhost:3001/task', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((task) => {
-                if (task.error) {
-                    throw task.error;
-                }
-                this.setState({
-                    tasks: [task, ...this.state.tasks],
-                    openNewTaskModal: false
-                })
-            })
-            .catch((err) => {
-                console.log('error', err);
-            })
+    componentDidUpdate(prevProps){
+        if(!prevProps.addTaskSuccess && this.props.addTaskSuccess){
+            this.setState({openNewTaskModal: false})
+        }
     }
 
     handleCheck = (taskId) => () => {
@@ -148,7 +102,7 @@ class ToDo extends Component {
     handleEdit = (task) => () => {
         this.setState({ editTask: task })
     }
-    
+
     modalToggle = () => {
         this.setState({ editTask: null })
     }
@@ -159,45 +113,6 @@ class ToDo extends Component {
         })
     }
 
-    handleSave = (updateText, updateDesc, updateDate, currentId) => {
-
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex((task) => task._id === currentId);
-
-        tasks[taskIndex] = {
-            ...tasks[taskIndex],
-            title: updateText,
-            description: updateDesc,
-            date: updateDate.toISOString().slice(0, 10)
-
-        };
-
-        fetch(`http://localhost:3001/task/${currentId}`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                title: updateText,
-                description: updateDesc,
-                date: updateDate.toISOString().slice(0, 10)
-            }),
-            headers: {
-                "Content-type": 'application/json'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    throw data.error;
-                }
-
-                this.setState({
-                    tasks: tasks,
-                    editTask: null 
-                })
-            })
-            .catch((err) => {
-                console.log('error', err);
-            })
-    }
 
     toggleModal = () => {
         this.setState({
@@ -214,7 +129,6 @@ class ToDo extends Component {
     render() {
 
         const {tasks , placeholder} = this.props;
-
         const tasksContainer = tasks.map((task) =>
             <div key={task._id} className="task_block">
                 <Task
@@ -245,6 +159,42 @@ class ToDo extends Component {
                 </Row>
                 {placeholder ?
                     <div className="tasks_list">
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Placeholder as={Card.Title} animation="glow">
+                                    <Placeholder xs={6} />
+                                </Placeholder>
+                                <Placeholder as={Card.Text} animation="glow">
+                                    <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+                                    <Placeholder xs={6} /> <Placeholder xs={8} />
+                                </Placeholder>
+                                <Placeholder.Button variant="primary" xs={6} />
+                            </Card.Body>
+                        </Card>
                         <Card style={{ width: '18rem' }}>
                             <Card.Body>
                                 <Placeholder as={Card.Title} animation="glow">
@@ -314,15 +264,12 @@ class ToDo extends Component {
                     {!!this.state.editTask &&
                         <Modal
                             value={this.state.editTask}
-                            onSave={this.handleSave}
+                            onSave={this.props.handleSave}
                             modalToggle={this.modalToggle}
                         />
                     }
                     {this.state.openNewTaskModal &&
-                        <NewTask
-                            onAdd={this.addTask}
-                            onCancel={this.toggleNewTaslModal}
-                        />
+                        <NewTask onCancel={this.toggleNewTaslModal} />
                     }
                 </Row>
             </Container>
@@ -335,18 +282,15 @@ class ToDo extends Component {
 const mapStatetoProps = (state) => {
     return {
         tasks: state.tasks,
-        placeholder : state.loading
+        placeholder : state.loading,
+        editModalShow : state.editModalShow,
+        addTaskSuccess: state.addTaskSuccess
     }
 }
 
-// const mapDispatchToProps = (dispatch)=>{
-//     return {
-//         changeCount: (value ) => { dispatch({type: 'CHANGE_COUNT' , value: value} )}
-//     }
-// }
-
 const mapDispatchToProps = {
     getTasks : getTasks,
+    handleSave : editTasks
 }
 
 export default connect(mapStatetoProps , mapDispatchToProps)(ToDo);

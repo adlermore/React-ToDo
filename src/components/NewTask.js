@@ -2,9 +2,11 @@ import React, { PureComponent } from "react";
 import { Form, InputGroup, Button, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux";
+import { addTask } from "../store/actions";
 
 class NewTask extends PureComponent {
-
+    
     state = {
         title: '',
         description: '',
@@ -45,7 +47,7 @@ class NewTask extends PureComponent {
             description,
             date: date.toISOString().slice(0, 10)
         }
-        this.props.onAdd(data)
+        this.props.addTask(data)
     }
 
     render() {
@@ -106,5 +108,9 @@ class NewTask extends PureComponent {
     }
 }
 
-export default NewTask;
+const mapDispatchToProps = {
+    addTask : addTask
+}
+
+export default connect(null , mapDispatchToProps)(NewTask); 
 
