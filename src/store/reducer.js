@@ -2,12 +2,13 @@
 import * as actionTypes from "./actionTypes";
 
 const DedaultState = {
-    tasks : [],
-    loading : false,
-    error : null, 
-    addTaskSuccess : false,
+    tasks: [],
+    loading: false,
+    error: null,
+    addTaskSuccess: false,
+    editTaskSuccess: false,
     successMessage: null,
-    editModalShow: false
+    removeTasksSuccess: false
 }
 
 export const mainReducer = (state = DedaultState, action) => {
@@ -15,20 +16,20 @@ export const mainReducer = (state = DedaultState, action) => {
         case actionTypes.LOADING: {
             return {
                 ...state,
-                loading : true
+                loading: true
             }
         }
         case actionTypes.ERROR: {
             return {
                 ...state,
-                loading : false,
+                loading: false,
                 error: action.error
             }
         }
         case actionTypes.GET_TASKS_SUCCESS: {
             return {
                 ...state,
-                loading : false,
+                loading: false,
                 tasks: action.tasks,
             }
         }
@@ -36,7 +37,7 @@ export const mainReducer = (state = DedaultState, action) => {
         case actionTypes.ADDING_TASK: {
             return {
                 ...state,
-                loading : true,
+                loading: true,
                 addTaskSuccess: false,
                 successMessage: null,
                 error: null,
@@ -46,18 +47,78 @@ export const mainReducer = (state = DedaultState, action) => {
         case actionTypes.ADD_TASK_SUCCESS: {
             return {
                 ...state,
-                loading : false,
-                tasks: [...state.tasks , action.tasks],
+                loading: false,
+                tasks: [...state.tasks, action.tasks],
                 addTaskSuccess: true,
-                successMessage: 'Task addes successfully'
+                successMessage: 'Task adding successfully'
             }
         }
-        case actionTypes.EDIT_TASKS_SUCCESS: {
 
-            const tasks = state.tasks;
-            const taskIndex = tasks.findIndex((task) => task._id === action.editedTask._id);    
-            // tasks[taskIndex] = action.editedTask;
+        case actionTypes.REMOVING_TASK: {
+            return {
+                ...state,
+                loading: true,
+                successMessage: null,
+                error: null,
+            }
+        }
+
+        case actionTypes.REMOVE_TASK_SUCCESS: {
+
+            const customTasks = [...state.tasks];
+            const updatedTask = customTasks.filter((Task) => Task._id !== action.taskId)
+
+            return {
+                ...state,
+                loading: false,
+                tasks: updatedTask,
+                successMessage: 'Task removing is successfully'
+            }
+        }
+
+        case actionTypes.REMOVING_TASKS: {
+            return {
+                ...state,
+                loading: true,
+                removeTasksSuccess: false,
+                successMessage: null,
+                error: null,
+            }
+        }
+
+        case actionTypes.REMOVE_TASKS_SUCCESS: {
+            let tasks = [...state.tasks];
+            const checkedTasks = action.checkedTasks;
             
+            checkedTasks.forEach(taskId => {
+                tasks = tasks.filter(task => task._id !== taskId)
+            });
+
+            checkedTasks.clear();
+
+            return {
+                ...state,
+                loading: false,
+                tasks: tasks,
+                removeTasksSuccess: true,
+                successMessage: 'Selected Tasks removing are successfully'
+            }
+        }
+
+        case actionTypes.EDITING_TASK: {
+            return {
+                ...state,
+                loading: true,
+                editTaskSuccess: false,
+                successMessage: null,
+                error: null,
+            }
+        }
+
+        case actionTypes.EDIT_TASKS_SUCCESS: {
+            const tasks = state.tasks;
+            const taskIndex = tasks.findIndex((task) => task._id === action.editedTask._id);
+
             tasks[taskIndex] = {
                 ...tasks[taskIndex],
                 title: action.data.title,
@@ -67,10 +128,11 @@ export const mainReducer = (state = DedaultState, action) => {
 
             return {
                 ...state,
-                loading : false,
+                loading: false,
                 tasks: tasks,
-                taskIndex : taskIndex,
-                editModalShow : false
+                taskIndex: taskIndex,
+                editTaskSuccess: true,
+                successMessage: 'Task Editing is successfully'
             }
         }
 

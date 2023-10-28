@@ -3,6 +3,8 @@ import { Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { FaEdit } from 'react-icons/fa'
+import { connect } from "react-redux";
+import { removeTask } from "../../store/actions";
 
 class Task extends PureComponent {
 
@@ -40,7 +42,9 @@ class Task extends PureComponent {
                             <Button variant="danger"
                                 disabled={this.props.disabled}
                                 className="task_button"
-                                onClick={this.props.onRemove(data._id)}>
+
+                                        onClick={()=>this.props.removeTask(data._id)}> 
+
                                 <RiDeleteBin5Line size={19} />
                             </Button>
                         </OverlayTrigger>
@@ -65,4 +69,20 @@ class Task extends PureComponent {
 
 }
 
-export default Task;
+
+// const mapStatetoProps = (state) => {
+//     return {
+//         tasks: state.tasks,
+//         placeholder : state.loading,
+//         editModalShow : state.editModalShow,
+//         addTaskSuccess: state.addTaskSuccess
+//     }
+// }
+
+const mapDispatchToProps = {
+    // getTasks : getTasks,
+    // handleSave : editTasks
+    removeTask : removeTask
+}
+
+export default connect(null , mapDispatchToProps)(Task);
