@@ -26,11 +26,11 @@ class Task extends PureComponent {
                 <input type="checkbox" className="chekbox-btn" onClick={this.toggleCheckbox} />
                 <Card.Body>
                     <Card.Title>
-                        <Link to={`/task/${data._id}`} >
+                        <Link to={`/task/${data._id}`} className="card-name" >
                             {data.title}
                         </Link>
                     </Card.Title>
-                    <Card.Text> Description: {data.description} </Card.Text>
+                    <Card.Text className="card-description"> Description: {data.description} </Card.Text>
                     <Card.Text> Date: {data.date ? data.date.slice(0, 10) : 'none'} </Card.Text>
                     <div className="task_buttons bootstrap-demo ">
                         <OverlayTrigger
@@ -69,19 +69,7 @@ class Task extends PureComponent {
 
 }
 
-
-// const mapStatetoProps = (state) => {
-//     return {
-//         tasks: state.tasks,
-//         placeholder : state.loading,
-//         editModalShow : state.editModalShow,
-//         addTaskSuccess: state.addTaskSuccess
-//     }
-// }
-
 const mapDispatchToProps = {
-    // getTasks : getTasks,
-    // handleSave : editTasks
     removeTask : removeTask
 }
 

@@ -115,6 +115,7 @@ class ToDo extends PureComponent {
                     </Col>
                 </Row>
                 {placeholder ?
+                
                     <div className="tasks_list">
                         <Card style={{ width: '18rem' }}>
                             <Card.Body>

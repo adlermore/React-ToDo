@@ -98,25 +98,27 @@ function SingleTask() {
     }
 
     return (
-        <div>
-            <div>{Currtask.title}</div>
-            <div>{Currtask.description}</div>
-            <div>{Currtask.date}</div>
-          
-            <Button variant="danger"
-                className="task_button"
-                onClick={removeCurrTask }
+        <div className="singleTask-container">
+            <div className="task_name">{Currtask.title}</div>
+            <div className="task_description">{Currtask.description}</div>
+            <div className="task_date">{Currtask.date.toString().slice(0, 10)}</div>
+            <div className="btn_wrapper">
+                <Button variant="danger"
+                    className="task_button remove-btn"
+                    onClick={removeCurrTask }
+                    >
+                        Remove
+                    <RiDeleteBin5Line size={19} />
+                </Button>
+
+                <Button variant="info"
+                    className="task_button edit-btn"
+                    onClick={handleEdit(Currtask)}
                 >
-                <RiDeleteBin5Line size={19} />
-            </Button>
-
-            <Button variant="info"
-                className="task_button"
-                onClick={handleEdit(Currtask)}
-            >
-                <FaEdit size={19} />
-            </Button>
-
+                    Edit
+                    <FaEdit size={19} />
+                </Button>
+            </div>
             {!!editTask &&
                 <Modal
                     value={editTask}

@@ -145,3 +145,63 @@ body {
 .header_link.active{
   color: red;
 }
+
+.card-description{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.card-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.singleTask-container{
+  margin: 40px auto;
+  padding: 0 20px;
+  max-width: 970px;
+}
+
+.task_name{
+    font-size: 31px;
+    font-weight: 600;
+    color: purple;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+
+.task_description{
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+.task_date{
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: rgba(53, 50, 50, 0.463);
+}
+
+.remove-btn , .edit-btn{
+  display: flex  !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  width: auto !important;
+  transition: 0.3s;
+}
+.edit-btn:hover{
+  opacity: 0.7;
+}
+.btn_wrapper{
+  display: flex;
+  align-items: center;
+}
+
+.btn_wrapper svg{
+  margin-left: 10px !important;
+}
