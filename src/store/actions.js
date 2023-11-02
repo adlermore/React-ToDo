@@ -1,10 +1,18 @@
 import request from "../components/helpers/request";
 import * as actionTypes from "./actionTypes";
 
-export function getTasks() {
+export function getTasks(params={}) {
+    let url = 'http://localhost:3001/task';
+    let payloadInfo = '&status=done';
+    if(!params.status){
+        payloadInfo = ''
+    }
+    if(params.search){
+        url= url+'?search='+params.search+payloadInfo;
+    }
     return (dispatch) => {
         dispatch({ type: actionTypes.LOADING });
-        request('http://localhost:3001/task')
+        request(url)
             .then((tasks) => {
                 dispatch({ type: actionTypes.GET_TASKS_SUCCESS, tasks })
             })
