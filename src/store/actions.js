@@ -80,3 +80,29 @@ export function editTasks(updateText, updateDesc, updateDate, currentId) {
     }
 }
 
+
+export function changeTaskStatus(data , activeSwitch) {
+    let status;
+    if(activeSwitch){
+        status = 'done'
+    }else{
+        status = 'active'
+    }
+
+    let reqStaus = {status: status}
+    console.log(reqStaus);
+    return (dispatch) => { 
+        dispatch({ type: actionTypes.CHANGEING_TASK_STATUS });
+        request(`http://localhost:3001/task/${data.data._id}`, 'PUT', reqStaus)
+            .then((editedTask) => {
+                dispatch({ 
+                    type: actionTypes.CHANGE_TASK_STATUS_SUCCESS, 
+                    editedTask, 
+                    status
+                })
+            })
+            .catch(error => {
+                dispatch({ type: actionTypes.ERROR, error: error.message })
+            })
+    }
+}

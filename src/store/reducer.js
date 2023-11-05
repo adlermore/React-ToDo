@@ -136,6 +136,50 @@ export const mainReducer = (state = DedaultState, action) => {
             }
         }
 
+
+
+        case actionTypes.CHANGEING_TASK_STATUS: {
+            return {
+                ...state,
+                loading: true,
+                editTaskSuccess: false,
+                successMessage: null,
+                error: null,
+            }
+        }
+
+        case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
+        
+            const tasks = state.tasks;
+            const taskIndex = tasks.findIndex((task) => task._id === action.editedTask._id);
+
+            tasks[taskIndex] = {
+                ...tasks[taskIndex],
+                status : action.status
+            };
+
+            let message;
+            if(action.editedTask.status==='done'){
+                message = 'Congtatulations , you have complated task 🎉!!'
+            }else{
+                message = 'The task is active now! 😒'
+            }
+
+            console.log(message);
+            console.log(action.editedTask);
+
+            return {
+                ...state,
+                loading: false,
+                tasks: tasks,
+                taskIndex: taskIndex,
+                editTaskSuccess: true,
+                successMessage: message
+            }
+        }
+
+
+
         default: return state;
     }
 }
