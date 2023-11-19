@@ -164,10 +164,6 @@ export const mainReducer = (state = DedaultState, action) => {
             }else{
                 message = 'The task is active now! 😒'
             }
-
-            console.log(message);
-            console.log(action.editedTask);
-
             return {
                 ...state,
                 loading: false,
