@@ -2,7 +2,7 @@ import request from "../components/helpers/request";
 import * as actionTypes from "./actionTypes";
 
 export function getTasks(params={}) {
-    let url = 'http://localhost:3001/task';
+    let url = 'https://todo-api-react-4939ac21813d.herokuapp.com/task';
     let payloadInfo = '&status=done';
     if(!params.status){
         payloadInfo = ''
@@ -25,7 +25,7 @@ export function getTasks(params={}) {
 export function addTask(data) {
     return (dispatch) => {
         dispatch({ type: actionTypes.ADDING_TASK });
-        request('http://localhost:3001/task', 'POST', data)
+        request('https://todo-api-react-4939ac21813d.herokuapp.com/task', 'POST', data)
             .then((tasks) => {
                 dispatch({ type: actionTypes.ADD_TASK_SUCCESS, tasks })
             })
@@ -38,7 +38,7 @@ export function addTask(data) {
 export function removeTask(taskId) {
     return (dispatch) => {
         dispatch({ type: actionTypes.REMOVING_TASK });
-        request(`http://localhost:3001/task/${taskId}`, 'DELETE')
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${taskId}`, 'DELETE')
             .then(() => {
                 dispatch({ type: actionTypes.REMOVE_TASK_SUCCESS, taskId })
             })
@@ -51,7 +51,7 @@ export function removeTask(taskId) {
 export function removeSelectedTasks(checkedTasks) {
     return (dispatch) => {
         dispatch({ type: actionTypes.REMOVING_TASKS });
-        request(`http://localhost:3001/task/`, 'PATCH', { tasks: [...checkedTasks] })
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/task/`, 'PATCH', { tasks: [...checkedTasks] })
             .then(() => {
                 dispatch({ type: actionTypes.REMOVE_TASKS_SUCCESS, checkedTasks })
             })
@@ -70,7 +70,7 @@ export function editTasks(updateText, updateDesc, updateDate, currentId) {
     }
     return (dispatch) => {
         dispatch({ type: actionTypes.EDITING_TASK });
-        request(`http://localhost:3001/task/${currentId}`, 'PUT', data)
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${currentId}`, 'PUT', data)
             .then((editedTask) => {
                 dispatch({ type: actionTypes.EDIT_TASKS_SUCCESS, editedTask, data })
             })
@@ -88,12 +88,12 @@ export function changeTaskStatus(data , activeSwitch) {
     }else{
         status = 'active'
     }
-
+    
     let reqStaus = {status: status}
     console.log(reqStaus);
     return (dispatch) => { 
         dispatch({ type: actionTypes.CHANGEING_TASK_STATUS });
-        request(`http://localhost:3001/task/${data.data._id}`, 'PUT', reqStaus)
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${data.data._id}`, 'PUT', reqStaus)
             .then((editedTask) => {
                 dispatch({ 
                     type: actionTypes.CHANGE_TASK_STATUS_SUCCESS, 

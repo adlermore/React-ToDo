@@ -20,7 +20,7 @@ function SingleTask() {
     const idParams = useParams();
 
     useEffect(() => {
-        fetch(`http://localhost:3001/task/${idParams.id}`, {
+        fetch(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${idParams.id}`, {
             method: 'GET',
             headers: {
                 "Content-type": 'application/json'
@@ -49,7 +49,7 @@ function SingleTask() {
 
     const handleSave=(taskTitle , description , date, taskId)=>{
         // console.log(taskId, data , true);
-        fetch(`http://localhost:3001/task/${taskId}`, {
+        fetch(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${taskId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 title: taskTitle,
@@ -79,7 +79,7 @@ function SingleTask() {
     }
 
     const removeCurrTask = () =>{
-        fetch(`http://localhost:3001/task/${Currtask._id}`, {
+        fetch(`https://todo-api-react-4939ac21813d.herokuapp.com/task/${Currtask._id}`, {
             method: 'DELETE',
             headers: {
                 "Content-type": 'application/json'
