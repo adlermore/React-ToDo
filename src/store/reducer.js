@@ -9,7 +9,8 @@ const DedaultState = {
     editTaskSuccess: false,
     successMessage: null,
     removeTasksSuccess: false,
-    currJwt : null
+    currJwt : null,
+    isLogined: false,
 }
 
 export const mainReducer = (state = DedaultState, action) => {
@@ -187,12 +188,11 @@ export const mainReducer = (state = DedaultState, action) => {
         case actionTypes.REGISTRATION_SUCCESS: {
             let message;
             if(action.dataJwt){
-                message = 'log this data 🎉!!'
+                message = 'Registration is Successfully 🎉!!'
                 localStorage.setItem("curr-jwt", JSON.stringify(action.dataJwt._id));
             }else{
                 message = 'data is null! 😒'
             }
-
             return {
                 ...state,
                 successMessage: message,
@@ -203,6 +203,7 @@ export const mainReducer = (state = DedaultState, action) => {
         case actionTypes.LOGIN_LOAD: {
             return {
                 ...state,
+                isLogined : false,
                 successMessage: null,
                 error: null,
             }
@@ -210,17 +211,19 @@ export const mainReducer = (state = DedaultState, action) => {
 
         case actionTypes.LOGIN_SUCCESS: {
             let message;
-            if(action.datalogin){
-                message = 'log this data 🎉!!'
-                // localStorage.setItem("curr-jwt", JSON.stringify(action.dataJwt._id));
+            let loginSuccess = false;
+            console.log(action.datalogin);
+            if(!action.datalogin.name){
+                message = 'login  Success 🎉!!'
+                loginSuccess=true;
             }else{
-                message = 'data is null! 😒'
+                message = `${action.datalogin.message} 😒`
             }
-
             return {
                 ...state,
                 successMessage: message,
-                currJwt: action.dataJwt
+                currJwt: action.dataJwt,
+                isLogined : loginSuccess
             }
         }
 

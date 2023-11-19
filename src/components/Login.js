@@ -1,19 +1,24 @@
-import React, {useState } from "react";
+import React, { useEffect , useState } from "react";
 import { Link } from "react-router-dom";
 import showPassimg from '../assets/img/showPass.png'
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import '../assets/scss/login/_login.scss';
 import { connect } from "react-redux";
-import {login} from "../store/actions";
+import { login } from "../store/actions";
 
-const Login = ({loginFunc}) => {
+const Login = ({ loginFunc, isLogined }) => {
     const [showPass, setshowPass] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
+    useEffect(()=>{
+        if (isLogined) {
+            navigate('/')   
+        }
+    },[isLogined , navigate ])
+
     const onSubmit = (data) => {
-        // navigate('/RegistrEmploy')
         loginFunc(data);
     };
 
@@ -26,7 +31,7 @@ const Login = ({loginFunc}) => {
         <>
             <div className="login_section registration_section">
                 <div className="custom_container">
-                <div className="login_title">Login</div>
+                    <div className="login_title">Login</div>
                     <div className="login_inner">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="block_inline"></div>
@@ -54,7 +59,7 @@ const Login = ({loginFunc}) => {
 // export default Login;
 const mapStatetoProps = (state) => {
     return {
-        currJwt: state.currJwt,
+        isLogined: state.isLogined,
     }
 }
 
