@@ -106,3 +106,41 @@ export function changeTaskStatus(data , activeSwitch) {
             })
     }
 }
+
+
+export function registration(data) {
+    return (dispatch) => { 
+        dispatch({ type: actionTypes.REGISTRATION_LOAD });
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/user/`, 'POST', data)
+            .then((dataJwt) => {
+                console.log(dataJwt)
+                dispatch({ 
+                    type: actionTypes.REGISTRATION_SUCCESS, 
+                    dataJwt
+                })
+            })
+            .catch(error => {
+                dispatch({ type: actionTypes.ERROR, error: error.message })
+            })
+    }
+}
+
+
+export function login(data) {
+    console.log('true' , data);
+    return (dispatch) => { 
+        dispatch({ type: actionTypes.LOGIN_LOAD });
+        request(`https://todo-api-react-4939ac21813d.herokuapp.com/user/sign-in/`, 'POST', data)
+            .then((datalogin) => {
+                console.log('login'  , datalogin)
+                dispatch({ 
+                    type: actionTypes.LOGIN_SUCCESS, 
+                    datalogin
+                })
+            })
+            .catch(error => {
+                console.log("error ", error);
+                dispatch({ type: actionTypes.ERROR, error: error.message })
+            })
+    }
+}

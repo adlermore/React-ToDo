@@ -1,0 +1,976 @@
+@import "../variables";
+@import "../mixins";
+
+.login_section {
+    margin: 0;
+    padding-top: 30px;
+    padding-bottom: 70px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .login_title {
+        color: $siteColor;
+        font-size: 34px;
+        line-height: 42px;
+        text-align: center;
+    }
+    .login_inner {
+        width: 480px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .css-8mmkcg {
+        display: none !important;
+    }
+
+    .user_login {
+        height: 48px;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+        color: $siteColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        outline: none;
+        padding: 0 20px;
+        line-height: 20px;
+        color: $siteColor;
+        border: 2px solid $secondColor;
+
+        &::placeholder {
+            opacity: 0;
+        }
+
+        &.visible {
+            &::placeholder {
+                opacity: 1;
+            }
+
+        }
+    }
+
+    .loginEmail_btn {
+        background: $secondColor;
+        margin-top: 40px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $siteColor;
+        font-size: 21px;
+        line-height: 26px;
+        border-radius: 20px;
+        width: 100%;
+
+        &:hover {
+            background: $siteColor;
+            opacity: 1;
+            color: $white;
+        }
+
+        &.disabled {
+            cursor: default;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    }
+    .login_user_name{
+        font-size: 22px;
+        color: $siteColor;
+        margin-top: 20px;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+    .forgot_inline{
+        margin-top: -10px;
+        display: flex;
+        font-size: 22px;
+        line-height: 26px;
+        color: $siteColor;
+        justify-content: space-between;
+        align-items: center;
+        .checkbox_info{
+            font-size: 22px;
+            line-height: 26px;
+            color: $siteColor;
+        }
+    }
+    .login_email_btn{
+        background: $secondColor;
+        border-radius: 25px;
+        width: 250px;
+        height: 50px;
+        border: none;
+        margin: 10px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        color: $siteColor;
+        font-size: 22px;
+        line-height: 26px;
+        &:hover{
+            background: $siteColor;
+            color: $white;
+        }
+    }
+    .forgot_link{
+        color: $siteColor !important;
+    }
+    .login_input_line {
+        width: 100%;
+        position: relative;
+        font-size: 17px;
+        line-height: 20px;
+        color: $siteColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        .info_animation {
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            justify-content: space-between;
+            transition: 0.5s;
+            width: 215px;
+            position: absolute;
+            top: 45px;
+
+            &.active {
+                width: 100%;
+
+                span {
+                    opacity: 0;
+                    right: -200px;
+                }
+            }
+        }
+
+        span {
+            transition: 0.5s;
+            padding-right: 20px;
+            opacity: 1;
+            position: relative;
+            right: 0;
+        }
+
+        img {
+            margin-right: 17px;
+            padding-left: 20px;
+            transition: 0.3s;
+        }
+
+        &:hover,
+        &:focus,
+        &:active,
+        &:visited {
+            .info_animation {
+                width: 100%;
+            }
+        }
+    }
+
+    .login_or {
+        margin-top: 49px;
+        font-size: 17px;
+        line-height: 20px;
+        color: $siteColor;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: $siteColor;
+            margin-right: 5px;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: $siteColor;
+            margin-left: 5px;
+        }
+    }
+
+    .google_btn {
+        margin-top: 49px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        border-radius: 25px;
+        @include hoverGradient();
+        color: $siteColor;
+        font-size: 21px;
+        line-height: 24px;
+
+        span {
+            margin-right: 15px;
+        }
+    }
+
+    .apple_btn {
+        margin-top: 28px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        border-radius: 25px;
+        color: $siteColor;
+        font-size: 21px;
+        border: 2px solid $secondColor;
+        line-height: 24px;
+        transition: 0.3s;
+        background: transparent;
+
+        &:hover {
+            opacity: 1;
+            background: $secondColor ;
+        }
+
+        span {
+            margin-right: 15px;
+
+            img {
+                margin-bottom: 3px;
+            }
+        }
+    }
+
+    @property --border-angle {
+        syntax: "<angle>";
+        inherits: true;
+        initial-value: 0turn;
+    }
+
+    .login_inner_text {
+        margin-top: 80px;
+        text-align: center;
+        font-size: 21px;
+        line-height: 26px;
+        color: $siteColor;
+    }
+
+    .signUp_btn {
+        margin-top: 25px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        border-radius: 25px;
+        color: $siteColor;
+        font-size: 21px;
+        border: 2px solid $siteColor;
+        line-height: 24px;
+
+        span {
+            margin-right: 15px;
+        }
+
+        &:hover {
+            background: $siteColor;
+            color: $white;
+            opacity: 1;
+        }
+    }
+    &.update_password{
+        position: relative;
+        .forgot_svg{
+            max-width: 260px;
+            margin: 0 auto;
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+        .login_title{
+            font-size: 35px;
+            line-height: 42px;
+            margin-top: 41px;
+        }
+        .login_inner{
+            margin-top: 30px;
+            max-width: 590px;
+        }
+        .cancel_update{
+            font-size: 22px;
+            line-height: 26px;
+            margin-top: 10px;
+            text-align: center;
+            display: block;
+            color: $siteColor;
+        }
+    }
+    .captcha_block{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .forgot_desc{
+        font-size: 22px;
+        line-height: 26px;
+        margin-top: 20px;
+        color: $siteColor;
+        text-align: center;
+    }
+    @media (max-width: 1799px) {
+        .login_title {
+            font-size: 48px;
+            line-height: 56px;
+        }
+    }
+
+    @media (max-width: 1599px) {
+        .login_title {
+            font-size: 42px;
+            line-height: 49px;
+        }
+    }
+
+    @media (max-width: 1399px) {
+        margin: 35px 0;
+        padding-bottom: 40px;
+
+        .login_title {
+            font-size: 38px;
+            line-height: 42px;
+        }
+
+        &.update_password .forgot_svg {
+            max-width: 200px;
+        }
+
+        .user_login {
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 19px;
+        }
+
+        .login_or {
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 18px;
+        }
+
+        .google_btn {
+            margin-top: 30px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 22px;
+        }
+
+        .loginEmail_btn {
+            height: 50px;
+            font-size: 18px;
+            line-height: 22px;
+        }
+
+        .apple_btn {
+            margin-top: 25px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 22px;
+        }
+
+        .signUp_btn {
+            margin-top: 25px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 22px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .login_inner {
+            max-width: 570px;
+        }
+
+        &.update_password{
+            .login_title {
+                font-size: 28px;
+                line-height: 36px;
+                margin-top: 30px;
+            }
+    
+        } 
+        .forgot_desc {
+            font-size: 18px;
+            line-height: 21px;
+        }
+        .login_title {
+            font-size: 30px;
+            line-height: 30px;
+        }
+
+        .login_inner_text {
+            margin-top: 60px;
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        margin: 20px 0;
+        padding-bottom: 20px;
+        .showPass_btn {
+            max-width: 30px;
+        }        
+        .forgot_inline .checkbox_info {
+            font-size: 18px;
+            line-height: 22px;
+        }
+        .forgot_inline {
+            margin-top: 15px;
+            font-size: 18px;
+            line-height: 23px;
+            flex-direction: column;
+            margin-bottom: 30px !important;
+            .forgot_link{
+                margin-top: 10px;
+            }
+        }
+        .login_email_btn {
+            width: 200px;
+            height: 45px;
+            font-size: 16px;
+            line-height: 19px;
+        }
+        .login_user_name {
+            font-size: 18px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .login_title {
+            font-size: 24px;
+            line-height: 28px;
+        }
+
+        .user_login {
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .login_section .login_or {
+            margin-top: 20px;
+            line-height: 20px;
+        }
+
+        .google_btn {
+            margin-top: 20px;
+            height: 45px;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .loginEmail_btn {
+            margin-top: 20px;
+            height: 45px;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .apple_btn {
+            margin-top: 20px;
+            height: 45px;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .login_inner_text {
+            margin-top: 40px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .signUp_btn {
+            margin-top: 20px;
+            height: 45px;
+            font-size: 14px;
+            line-height: 19px;
+        }
+    }
+}
+
+
+.registration_section {
+    form {
+        width: 100%;
+    }
+
+    .error-info {
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+    .has-error .error-info {
+        opacity: 1;
+    }
+
+    .block_inline {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: flex-end;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .form_block {
+        position: relative;
+        width: 100%;
+        margin-bottom: 25px;
+
+        input {
+            height: 50px;
+            border: 1px solid #1F9BF2;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 17px;
+            line-height: 20px;
+            color: #B3B3B3;
+            min-width: -webkit-fill-available;
+            outline: none;
+        }
+    }
+
+    .error-info {
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        right: 0px;
+        font-size: 14px;
+        color: #FB4242;
+    }
+
+    input {
+        transition: 0.3s;
+    }
+
+    .submit_btn {
+        margin-top: 25px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        background: #1F9BF2;
+        font-size: 18px;
+        line-height: 22px;
+        color: #ffffff;
+        height: 50px;
+        transition: 0.3s;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            background: $siteColor;
+        }
+    }
+
+    .css-13cymwt-control,
+    .css-t3ipsp-control {
+        height: 56px;
+        border: 2px solid #1F9BF2;
+        border-radius: 10px;
+        padding: 0 20px;
+        font-size: 17px;
+        transition: 0.3s;
+        line-height: 20px;
+        color: #B3B3B3;
+
+        >div {
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            flex-wrap: unset !important;
+        }
+    }
+
+    .checkbox_block {
+        margin-bottom: 11px;
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .error-info {
+            position: relative;
+            bottom: auto;
+            margin-left: auto;
+        }
+
+        label {
+            display: flex;
+            position: relative;
+            align-items: center;
+            font-size: 17px;
+            line-height: 20px;
+            color: #1F9BF2;
+        }
+
+        .checkbox_line {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            border: 1px solid #1F9BF2;
+            margin-right: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:before {
+                content: "✔";
+                color: #5CE8CF;
+                transition: 0.3s;
+                opacity: 0;
+                font-size: 12px;
+            }
+        }
+
+        p {
+            margin: 0;
+
+            span {
+                color: $siteColor;
+            }
+        }
+
+        input {
+            display: none;
+
+            &:checked+.checkbox_line {
+                &:before {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .css-1u9des2-indicatorSeparator {
+        display: none;
+    }
+
+    .css-1xc3v61-indicatorContainer {
+        &::before {
+            font-family: "icomoon" !important;
+            content: "\e902";
+            font-size: 16px;
+            position: relative;
+            left: 10px;
+        }
+
+        svg {
+            display: none;
+        }
+    }
+
+    .showPass_btn {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+    }
+
+    .email-info {
+        opacity: 1 !important;
+    }
+
+    .css-15lsz6c-indicatorContainer {
+        &::before {
+            font-family: "icomoon" !important;
+            content: "\e902";
+            font-size: 16px;
+            position: relative;
+            left: 10px;
+            transform: rotate(180deg);
+        }
+    }
+
+    .css-1jqq78o-placeholder,
+    .css-1dimb5e-singleValue {
+        margin: 0;
+        right: 5px;
+        position: relative;
+    }
+
+    .css-tj5bde-Svg {
+        display: none;
+    }
+
+    .registr_next_login {
+        margin: 0 auto;
+        margin-top: 20px;
+        text-align: center;
+        color: #1F9BF2;
+        justify-content: center;
+        display: flex;
+        font-size: 18px;
+        line-height: 20px;
+        align-items: center;
+        span {
+            color: $siteColor;
+        }
+    }
+
+    .input_label {
+        font-size: 21px;
+        line-height: 25px;
+        color: $siteColor;
+        margin-bottom: 17px;
+    }
+
+    .textarea_input {
+        width: auto;
+        outline: none;
+        resize: none;
+        height: 210px;
+        min-width: -webkit-fill-available;
+        padding: 20px;
+        border-radius: 15px;
+        font-size: 18px;
+        transition: 0.3s;
+        line-height: 22px;
+        color: #B3B3B3;
+        border: 2px solid #1F9BF2;
+    }
+
+    .texarea-form {
+        margin-top: 40px;
+    }
+
+    .next_registr_btn {
+        margin-left: auto;
+        margin-top: 50px;
+        @include hoverGradient;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 42px;
+        cursor: pointer;
+        color: $siteColor;
+        font-size: 23px;
+        line-height: 28px;
+        border-radius: 10px;
+        width: 157px;
+    }
+
+    &.registr_employ {
+        .login_title {
+            margin-bottom: 60px;
+        }
+
+        .form_block {
+            margin-bottom: 30px;
+        }
+    }
+
+    &.register_Lg {
+        .form_block input {
+            height: 50px;
+        }
+    }
+
+    .add_lg_btn {
+        font-size: 21px;
+        line-height: 25px;
+        margin-top: 10px;
+        color: $siteColor;
+
+        svg {
+            font-size: 25px;
+            position: relative;
+            bottom: 2px;
+        }
+
+        &.disabled {
+            opacity: 0.5;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    @media (max-width: 1599px) {
+        .login_or {
+            margin-top: 40px;
+        }
+
+        .form_block input {
+            height: 50px;
+        }
+
+        .form_block {
+            margin-bottom: 30px;
+        }
+
+        .css-13cymwt-control,
+        .css-t3ipsp-control {
+            height: 50px;
+        }
+
+        .registr_next_login {
+            margin-top: 30px;
+        }
+
+        .submit_btn {
+            height: 50px;
+        }
+    }
+
+    .has-error {
+
+        input,
+        .textarea_input,
+        .css-13cymwt-control,
+        .css-t3ipsp-control {
+            border: 1px solid #FB4242;
+        }
+    }
+
+    @media (max-width: 1399px) {
+        &.registr_employ {
+            .block_inline {
+                margin-top: 0;
+            }
+        }
+
+        .login_or {
+            margin-top: 30px;
+        }
+
+        .form_block input {
+            height: 45px;
+        }
+
+        .form_block {
+            margin-bottom: 25px;
+        }
+
+        .css-13cymwt-control,
+        .css-t3ipsp-control {
+            height: 50px;
+        }
+
+        .registr_next_login {
+            margin-top: 25px;
+            font-size: 18px;
+            line-height: 23px;
+        }
+        .showPass_btn {
+            top: 12px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .block_inline {
+            margin-top: 30px;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        &.registr_employ {
+            .block_inline {
+                gap: 10px;
+            }
+        }
+
+        .checkbox_block label {
+            font-size: 14px;
+            line-height: 18px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .registr_next_login {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .form_block input {
+            padding: 0 15px;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .css-13cymwt-control,
+        .css-t3ipsp-control {
+            padding: 0 15px;
+            font-size: 14px;
+            line-height: 18px;
+
+            .css-1jqq78o-placeholder {
+                left: -10px;
+                position: relative;
+            }
+        }
+
+        .submit_btn {
+            margin-top: 20px;
+            font-size: 16px;
+            height: 45px;
+            line-height: 23px;
+        }
+
+        .checkbox_block .checkbox_line {
+            min-width: 18px;
+
+            &:before {
+                font-size: 10px;
+                // content: "✅";
+            }
+        }
+
+        &.registr_employ {
+            .login_title {
+                margin-bottom: 30px;
+            }
+
+            .form_block {
+                margin-bottom: 20px;
+            }
+
+            .input_label {
+                font-size: 16px;
+                line-height: 20px;
+                margin-bottom: 10px;
+            }
+
+            .texarea-form {
+                margin-top: 20px;
+
+                .textarea_input {
+                    font-size: 14px;
+                    transition: 0.3s;
+                    line-height: 17px;
+                }
+            }
+
+            .next_registr_btn {
+                margin-top: 30px;
+                height: 40px;
+                font-size: 18px;
+                line-height: 24px;
+                border-radius: 10px;
+            }
+        }
+    }
+}

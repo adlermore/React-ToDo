@@ -8,7 +8,8 @@ const DedaultState = {
     addTaskSuccess: false,
     editTaskSuccess: false,
     successMessage: null,
-    removeTasksSuccess: false
+    removeTasksSuccess: false,
+    currJwt : null
 }
 
 export const mainReducer = (state = DedaultState, action) => {
@@ -148,6 +149,7 @@ export const mainReducer = (state = DedaultState, action) => {
             }
         }
 
+
         case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
         
             const tasks = state.tasks;
@@ -174,7 +176,53 @@ export const mainReducer = (state = DedaultState, action) => {
             }
         }
 
+        case actionTypes.REGISTRATION_LOAD: {
+            return {
+                ...state,
+                successMessage: null,
+                error: null,
+            }
+        }
 
+        case actionTypes.REGISTRATION_SUCCESS: {
+            let message;
+            if(action.dataJwt){
+                message = 'log this data 🎉!!'
+                localStorage.setItem("curr-jwt", JSON.stringify(action.dataJwt._id));
+            }else{
+                message = 'data is null! 😒'
+            }
+
+            return {
+                ...state,
+                successMessage: message,
+                currJwt: action.dataJwt
+            }
+        }
+
+        case actionTypes.LOGIN_LOAD: {
+            return {
+                ...state,
+                successMessage: null,
+                error: null,
+            }
+        }
+
+        case actionTypes.LOGIN_SUCCESS: {
+            let message;
+            if(action.datalogin){
+                message = 'log this data 🎉!!'
+                // localStorage.setItem("curr-jwt", JSON.stringify(action.dataJwt._id));
+            }else{
+                message = 'data is null! 😒'
+            }
+
+            return {
+                ...state,
+                successMessage: message,
+                currJwt: action.dataJwt
+            }
+        }
 
         default: return state;
     }
